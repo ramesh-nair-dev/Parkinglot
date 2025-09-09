@@ -125,7 +125,14 @@ mvn exec:java -Dexec.mainClass="Main"
 
 ## 👨‍💻 Author
 
-Ramesh Nair – SDE with strong focus on **system design, clean code, and scalable architectures**.
+**Ramesh Nair**
+
+* Backend Engineer | Java | Spring Boot | System Design Enthusiast
+* Focused on building **scalable, maintainable, real-world systems**.
+* Passionate about **clean architecture, design patterns, and domain modeling**.
+
+📫 Reach me at: ramesh200212@gmail.com
+🌐 GitHub: https://github.com/ramesh-nair-dev
 
 ---
 
