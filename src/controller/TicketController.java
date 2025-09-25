@@ -14,7 +14,7 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
-    IssueTicketResponse issueTicket(IssueTicketRequest request_DTO) throws Exception {
+    public IssueTicketResponse issueTicket(IssueTicketRequest request_DTO) throws Exception {
         IssueTicketResponse response = new IssueTicketResponse();
         Ticket ticket = ticketService.issueTicket(request_DTO.getGateId(),request_DTO.getVehicleNumber(),request_DTO.getVehicleType(),request_DTO.getVehicleOwner(),request_DTO.getFareStrategyType());
         response.setTicket(ticket);

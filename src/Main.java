@@ -21,9 +21,8 @@ public class Main {
         TicketService ticketService = new TicketService(
                 gateRepository,
                 vehicleRepository,
-                slotAssignmentStrategyFactory,
-                ticketRepository,
-                parkingLotRepository
+                parkingLotRepository,
+                ticketRepository
         );
         BillService billService = new BillService(
                 ticketRepository,

@@ -47,10 +47,12 @@ public class Cli {
                             IssueTicketRequest request = new IssueTicketRequest();
                             request.setVehicleNumber(parts[1]);
                             request.setVehicleType(VehicleType.valueOf(parts[2].toUpperCase()));
-                            request.setGateId(1L);
+                            request.setGateId(1);
                             ticketController.issueTicket(request);
                         } catch (IllegalArgumentException e) {
                             System.out.println("Invalid vehicle type. Supported types: CAR, BIKE");
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
                         }
                     }
                     break;
@@ -61,7 +63,7 @@ public class Cli {
                         try {
                             IssueBillRequest request = new IssueBillRequest();
                             request.setTicketId(Integer.parseInt(parts[1]));
-                            request.setGateId(2L); // Assuming exit gate ID is 2
+                            request.setGateId(2); // Assuming exit gate ID is 2
                             IssueBillResponse response = billController.issueBill(request);
                             System.out.println("Bill issued successfully:");
                             System.out.println("  Bill Number: " + response.getBillNumber());
