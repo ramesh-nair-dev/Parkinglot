@@ -1,94 +1,28 @@
----
-
-# 🚗 Parking Lot Management System
-
-A modular, extensible, and production-grade **Parking Lot Management System** implemented in Java.
-This project demonstrates **clean architecture, design patterns, and scalable system design principles** for solving one of the most common low-level design (LLD) interview problems.
-
----
-
-## ✨ Highlights
-
-* **Clean Layered Architecture**
-
-  * `models` → Core domain entities (ParkingLot, Vehicle, Ticket, Gate, Operator, etc.)
-  * `repositories` → Data access abstraction using in-memory stores (easily swappable with DB later)
-  * `service` → Business logic orchestration (`TicketService`, Slot assignment, etc.)
-  * `strategies` → Pluggable slot assignment and fare strategies
-  * `controller` → Entry point for client requests
-
-* **Design Principles Applied**
-
-  * **SOLID Principles**
-
-    * **Single Responsibility** → Repositories handle persistence, services handle orchestration, strategies handle logic.
-    * **Open/Closed Principle** → Add new slot assignment or fare strategies without touching core services.
-  * **Strategy Pattern** → Flexible slot allocation & fare calculation.
-  * **Factory Pattern** → Centralized slot strategy resolution via `SlotAssignmentStrategyFactory`.
-  * **Repository Pattern** → Decouples persistence from business logic.
-  * **Polymorphism & Enums** → Clean representation of strategies, vehicle types, and fare policies.
-
-* **Extensibility**
-
-  * Adding a new **vehicle type** (e.g., EV, Truck) → update `VehicleType` enum + strategy logic.
-  * Adding a new **fare strategy** (e.g., Surge pricing, Weekend discounts) → implement new strategy class, no service change needed.
-  * Adding new **slot allocation logic** (e.g., Nearest slot, Priority-based) → plug into strategy factory.
-
----
-
-## 📂 Project Structure
-
-```
-Parkinglot-main/
-│── controller/                # Handles client input (simulating API layer)
-│── models/                    # Domain models (Ticket, Vehicle, ParkingLot, etc.)
-│── repositories/              # Repository classes (in-memory persistence)
-│── service/                   # Business logic layer (TicketService, etc.)
-│── strategies/                # Slot assignment & fare calculation strategies
-│── Main.java                  # Application entry point (demo run)
-```
-
----
-
-## 🚀 Core Flow (How Ticket Issuance Works)
-
-1. **Vehicle arrives** → Request sent to `TicketService.issueTicket()`.
-2. **Gate validation** → Ensures gate exists and operator is logged.
-3. **Vehicle registration** → Reuse existing or create new entry in repository.
-4. **Slot assignment** → Delegated to `SlotAssignmentStrategyFactory` (strategy-driven).
-5. **Fare policy attached** → Ticket links to pricing strategy (flat/hourly/dynamic).
-6. **Ticket saved** → Final object persisted in `TicketRepository`.
-
----
-
-## 🧩 Example: Strategy Flexibility
-
-```java
-ParkingSlot parkingSlot = SlotAssignmentStrategyFactory
-    .getParkingSlotAssignmentStrategy(parkingLot.getParkingSlotStrategy())
-    .allotParkingSlot(parkingLot, vehicleType);
-```
-
-* Today → `NearestAvailableSlotStrategy`
-* Tomorrow → Add `VIPPrioritySlotStrategy` or `EVChargingSlotStrategy` with **zero service code change**.
-
----
-
-## 🛠️ How to Run
-
 ### Prerequisites
 
 * Java 17+
-* Maven
 
-### Steps
+### How to Run the Demo
 
-```bash
-git clone <this-repo>
-cd Parkinglot-main
-mvn clean install
-mvn exec:java -Dexec.mainClass="Main"
-```
+1.  **Clone the repository:**
+    ```bash
+    git clone <this-repo>
+    cd Parkinglot-main
+    ```
+
+2.  **Compile the Java code:**
+    ```bash
+    mkdir out
+    find src -name "*.java" > sources.txt
+    javac -d out @sources.txt
+    ```
+
+3.  **Run the application:**
+    ```bash
+    java -cp out Main
+    ```
+
+4.  The application will start in interactive mode.
 
 ---
 
@@ -101,6 +35,46 @@ mvn exec:java -Dexec.mainClass="Main"
 👨 Operator: John Doe
 💰 Fare Strategy: HOURLY
 ```
+
+---
+
+## 🚀 Live Interactive Demo
+
+This project now features a fully interactive Command-Line Interface (CLI) to demonstrate the parking lot's functionality in real-time. This is the best way to see the design patterns and business logic in action.
+
+### Interactive Commands
+
+Once the demo is running, you can use the following commands:
+
+*   `park <vehicle_number> <vehicle_type>`: Parks a vehicle and issues a ticket.
+    *   Example: `park KA-01-HH-1234 CAR`
+*   `unpark <ticket_id>`: Calculates the fare and marks the slot as available.
+*   `exit`: Exits the application.
+
+### Demo Output Example
+
+```
+=================================================
+      🚗 Welcome to Parking Lot System      
+=================================================
+
+Commands:
+  park <vehicle_number> <vehicle_type (CAR, BIKE, etc.)>
+  unpark <ticket_id>
+  exit
+> park MH-12-BF-4567 BIKE
+
+Issuing ticket for vehicle MH-12-BF-4567 with type BIKE at gate 1
+Ticket issued successfully with ticket id: 1
+
+Commands:
+  park <vehicle_number> <vehicle_type (CAR, BIKE, etc.)>
+  unpark <ticket_id>
+  exit
+> 
+```
+
+This interactive demo clearly showcases the system's core functionality and provides a hands-on experience of the application's capabilities, which is great for impressing recruiters.
 
 ---
 
@@ -135,5 +109,3 @@ mvn exec:java -Dexec.mainClass="Main"
 🌐 GitHub: https://github.com/ramesh-nair-dev
 
 ---
-
-
